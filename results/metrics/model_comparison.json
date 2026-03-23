@@ -1,0 +1,10 @@
+[
+  {
+    "modelo":"Perceptr\u00f3n",
+    "accuracy_val":0.8888888889
+  },
+  {
+    "modelo":"MLP (1 capa oculta, 128)",
+    "accuracy_val":1.0
+  }
+]
