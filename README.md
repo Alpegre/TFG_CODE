@@ -13,17 +13,23 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - Ficheros `.pat` en `data/raw/`
 - Dependencias en `requirements.txt`
 
+**Resumen:** Se organizó el repositorio y el entorno (dependencias) para poder entrenar, evaluar y guardar resultados de forma reproducible.
+
 ### **Bloque 2 — Lectura y visualización**
 - Lector de ficheros `.pat`
 - Conversión a tensores/arrays
 - Visualización 7×5
 - Mapeo automático A–Z
 
+**Resumen:** Se implementó el parser de `.pat` (formato SNNS) y utilidades para comprobar visualmente que los patrones se cargan correctamente.
+
 ### **Bloque 3 — Perceptrón simple**
 - Modelo 35 → 26 (sin capa oculta)
 - Entrenamiento completo
 - Evaluación en validación
 - Guardado de modelo y métricas
+
+**Resumen:** Se entrenó el modelo base (sin capa oculta), se guardaron históricos/métricas y se evaluó en validación con accuracy y matriz de confusión.
 
 ### **Bloque 4 — MLP con capa oculta**
 - Modelo con 1 capa oculta (ReLU)
@@ -32,11 +38,22 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - Evaluación y métricas en validación
 - Comparación Perceptrón vs MLP
 
+**Resumen:** Se añadió un modelo más expresivo (MLP), se repitió el flujo de entrenamiento/evaluación y se generó una comparación directa con el perceptrón.
+
 ### **Bloque 5 — Experimentos de hiperparámetros (learning rate)**
 - Barrido de *learning rate* en Perceptrón y MLP
 - Varias repeticiones por configuración (estabilidad)
 - Parada temprana por umbral de loss ($d_{max}$)
 - Exportación de resultados y resumen estadístico
+
+**Resumen:** Se automatizó el barrido de learning rate con repeticiones y criterio de parada, exportando resultados (CSV) y generando gráficas/tablas para la memoria.
+
+### **Bloque 6 — Validación con ruido**
+- Evaluación en `lettersval.pat` con inversión (0↔1) de 2/4/6 píxeles por patrón
+- Repeticiones por nivel de ruido para estimar media y desviación típica
+- Exportación de métricas (CSV/JSON) y figuras (curva + matrices de confusión)
+
+**Resumen:** Se midió la robustez de Perceptrón y MLP ante perturbaciones en la entrada, generando un resumen cuantitativo y visual de degradación por nivel de ruido.
 
 ---
 
