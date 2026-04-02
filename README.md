@@ -197,6 +197,15 @@ python -m src.viz.generate_tables_and_figures
 
 ---
 
+### **Bloque 6 — Validación con ruido (2/4/6 píxeles)**
+Evalúa los modelos guardados sobre `lettersval.pat` inyectando ruido (inversión 0↔1 de **N píxeles** por patrón) y genera métricas/figuras de robustez.
+
+```bash
+python -m src.eval.evaluate_noise
+```
+
+---
+
 ## ✅ Resultados obtenidos (validación)
 
 | Modelo | Accuracy |
@@ -244,6 +253,18 @@ python -m src.viz.generate_tables_and_figures
 - `results/metrics/table_model_comparison.csv`
 - `results/metrics/table_model_comparison.md`
 - `results/metrics/table_model_comparison.tex`
+
+### Validación con ruido
+- `results/metrics/noise_eval_runs.csv` (accuracy por repetición)
+- `results/metrics/noise_eval_summary.csv` / `results/metrics/noise_eval_summary.json` (resumen)
+- `results/metrics/noise_eval_per_sample.csv` (casos difíciles)
+- `results/figures/noise_accuracy_vs_pixels.png`
+- `results/figures/perceptron_confusion_noise2.png`
+- `results/figures/perceptron_confusion_noise4.png`
+- `results/figures/perceptron_confusion_noise6.png`
+- `results/figures/mlp_confusion_noise2.png`
+- `results/figures/mlp_confusion_noise4.png`
+- `results/figures/mlp_confusion_noise6.png`
 
 ---
 

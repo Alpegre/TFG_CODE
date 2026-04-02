@@ -1,0 +1,44 @@
+[
+  {
+    "model": "mlp",
+    "noise_pixels": 2,
+    "repeats": 100,
+    "mean_accuracy": 0.8577777777777778,
+    "std_accuracy": 0.0908317416294674
+  },
+  {
+    "model": "mlp",
+    "noise_pixels": 4,
+    "repeats": 100,
+    "mean_accuracy": 0.74,
+    "std_accuracy": 0.13967342952786088
+  },
+  {
+    "model": "mlp",
+    "noise_pixels": 6,
+    "repeats": 100,
+    "mean_accuracy": 0.55,
+    "std_accuracy": 0.16134411727755163
+  },
+  {
+    "model": "perceptron",
+    "noise_pixels": 2,
+    "repeats": 100,
+    "mean_accuracy": 0.8333333333333333,
+    "std_accuracy": 0.10998305031017559
+  },
+  {
+    "model": "perceptron",
+    "noise_pixels": 4,
+    "repeats": 100,
+    "mean_accuracy": 0.6988888888888889,
+    "std_accuracy": 0.12564337482776194
+  },
+  {
+    "model": "perceptron",
+    "noise_pixels": 6,
+    "repeats": 100,
+    "mean_accuracy": 0.6355555555555555,
+    "std_accuracy": 0.13684124697500757
+  }
+]
