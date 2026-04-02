@@ -188,6 +188,15 @@ python -m src.viz.plot_hyperparams
 
 ---
 
+### **Bloque 5 — Tablas y gráficas para la memoria**
+Genera tablas (`.csv`, `.md`, `.tex`) y gráficas comparativas a partir de los resultados ya guardados.
+
+```bash
+python -m src.viz.generate_tables_and_figures
+```
+
+---
+
 ## ✅ Resultados obtenidos (validación)
 
 | Modelo | Accuracy |
@@ -247,8 +256,7 @@ pip install pyarrow
 
 - Si al generar tablas (por ejemplo con `python -m src.viz.generate_tables_and_figures`) aparece un error de dependencias opcionales de **pandas**, instala:
 ```bash
-pip install Jinja2 tabulate
-
+pip install jinja2 tabulate
 ```
 
 ---
