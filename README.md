@@ -32,6 +32,12 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - Evaluación y métricas en validación
 - Comparación Perceptrón vs MLP
 
+### **Bloque 5 — Experimentos de hiperparámetros (learning rate)**
+- Barrido de *learning rate* en Perceptrón y MLP
+- Varias repeticiones por configuración (estabilidad)
+- Parada temprana por umbral de loss ($d_{max}$)
+- Exportación de resultados y resumen estadístico
+
 ---
 
 ## ✅ Estructura del proyecto
@@ -161,6 +167,27 @@ python -m src.eval.compare_models
 
 ---
 
+### **Bloque 5 — Barrido de hiperparámetros (learning rate)**
+Ejecuta múltiples entrenamientos para **Perceptrón** y **MLP** variando el *learning rate*.
+
+```bash
+python -m src.train.run_hyperparams
+```
+
+Parámetros actuales (definidos en el script):
+- `learning_rates = [0.2, 2.0, 5.0, 10.0]`
+- `repeats = 5` (repeticiones por valor)
+- `dmax = 0.1` (parada temprana cuando `loss <= dmax`)
+
+### **Bloque 5 — Gráficas de hiperparámetros**
+Genera gráficas a partir de `results/metrics/hyperparam_summary.csv` (requiere ejecutar el barrido antes).
+
+```bash
+python -m src.viz.plot_hyperparams
+```
+
+---
+
 ## ✅ Resultados obtenidos (validación)
 
 | Modelo | Accuracy |
@@ -192,6 +219,23 @@ python -m src.eval.compare_models
 - `results/metrics/model_comparison.csv`  
 - `results/metrics/model_comparison.json`
 
+### Hiperparámetros (learning rate)
+- `results/metrics/hyperparam_results.csv` (todas las ejecuciones)
+- `results/metrics/hyperparam_summary.csv` (media/desviación por modelo y LR)
+- `results/metrics/perceptron_lr{LR}_run{N}_history.csv` (histórico por ejecución)
+- `results/metrics/mlp_lr{LR}_run{N}_history.csv` (histórico por ejecución)
+- `results/figures/hyperparam_loss_vs_lr.png`
+- `results/figures/hyperparam_acc_vs_lr.png`
+- `results/figures/hyperparam_stability_loss.png`
+
+### Tablas y gráficas para la memoria
+- `results/figures/loss_comparison.png`
+- `results/figures/accuracy_comparison.png`
+- `results/figures/model_comparison_bar.png`
+- `results/metrics/table_model_comparison.csv`
+- `results/metrics/table_model_comparison.md`
+- `results/metrics/table_model_comparison.tex`
+
 ---
 
 ## ✅ Notas
@@ -199,6 +243,12 @@ python -m src.eval.compare_models
 - Si aparece un warning de **pandas** sobre `pyarrow`, se puede ignorar o instalar:
 ```bash
 pip install pyarrow
+```
+
+- Si al generar tablas (por ejemplo con `python -m src.viz.generate_tables_and_figures`) aparece un error de dependencias opcionales de **pandas**, instala:
+```bash
+pip install Jinja2 tabulate
+
 ```
 
 ---
