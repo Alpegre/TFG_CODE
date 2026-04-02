@@ -3,22 +3,22 @@
     "model": "mlp",
     "noise_pixels": 2,
     "repeats": 100,
-    "mean_accuracy": 0.8577777777777778,
-    "std_accuracy": 0.0908317416294674
+    "mean_accuracy": 0.858888888888889,
+    "std_accuracy": 0.11150882803847875
   },
   {
     "model": "mlp",
     "noise_pixels": 4,
     "repeats": 100,
-    "mean_accuracy": 0.74,
-    "std_accuracy": 0.13967342952786088
+    "mean_accuracy": 0.7188888888888889,
+    "std_accuracy": 0.14165483764791087
   },
   {
     "model": "mlp",
     "noise_pixels": 6,
     "repeats": 100,
-    "mean_accuracy": 0.55,
-    "std_accuracy": 0.16134411727755163
+    "mean_accuracy": 0.581111111111111,
+    "std_accuracy": 0.15938449386592898
   },
   {
     "model": "perceptron",

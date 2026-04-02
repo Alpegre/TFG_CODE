@@ -184,7 +184,7 @@ def main() -> None:
                 y_true_labels=y_true_labels,
                 noise_pixels=int(n),
                 repeats=int(args.repeats),
-                seed=int(args.seed) + (0 if spec.name == "perceptron" else 100000),
+                seed=int(args.seed),
             )
 
             runs_df.insert(0, "model", spec.name)
