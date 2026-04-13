@@ -1,4 +1,5 @@
 import os
+import argparse
 import random
 import numpy as np
 import pandas as pd
@@ -66,12 +67,63 @@ def train_once(build_fn, X, y, lr, max_epochs, dmax, run_id, model_name, out_dir
     }
 
 
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Bloque 5 — Barrido de hiperparámetros (learning rate) con repeticiones y dmax.",
+    )
+    p.add_argument(
+        "--learning-rates",
+        type=float,
+        nargs="+",
+        default=[0.2, 2.0, 5.0, 10.0],
+        help="Lista de learning rates a probar.",
+    )
+    p.add_argument(
+        "--repeats",
+        type=int,
+        default=5,
+        help="Repeticiones por learning rate.",
+    )
+    p.add_argument(
+        "--dmax",
+        type=float,
+        default=0.1,
+        help="Parada temprana si loss <= dmax.",
+    )
+    p.add_argument(
+        "--max-epochs-perceptron",
+        type=int,
+        default=200,
+        help="Máximo de épocas para el perceptrón.",
+    )
+    p.add_argument(
+        "--max-epochs-mlp",
+        type=int,
+        default=300,
+        help="Máximo de épocas para el MLP.",
+    )
+    p.add_argument(
+        "--seed-perceptron",
+        type=int,
+        default=1000,
+        help="Semilla base para el perceptrón (se suma el nº de repetición).",
+    )
+    p.add_argument(
+        "--seed-mlp",
+        type=int,
+        default=2000,
+        help="Semilla base para el MLP (se suma el nº de repetición).",
+    )
+    return p.parse_args()
+
+
 def main():
+    args = parse_args()
     X, y = load_pat("data/raw/letterstrain.pat")
 
-    learning_rates = [0.2, 2.0, 5.0, 10.0]
-    repeats = 5
-    dmax = 0.1
+    learning_rates = [float(lr) for lr in args.learning_rates]
+    repeats = int(args.repeats)
+    dmax = float(args.dmax)
 
     os.makedirs("results/metrics", exist_ok=True)
 
@@ -80,13 +132,13 @@ def main():
     # 1) Perceptrón
     for lr in learning_rates:
         for run in range(1, repeats + 1):
-            set_seed(1000 + run)
+            set_seed(int(args.seed_perceptron) + run)
             row = train_once(
                 build_fn=build_perceptron,
                 X=X,
                 y=y,
                 lr=lr,
-                max_epochs=200,
+                max_epochs=int(args.max_epochs_perceptron),
                 dmax=dmax,
                 run_id=run,
                 model_name="perceptron",
@@ -97,13 +149,13 @@ def main():
     # 2) MLP (35 → 64 → 26)
     for lr in learning_rates:
         for run in range(1, repeats + 1):
-            set_seed(2000 + run)
+            set_seed(int(args.seed_mlp) + run)
             row = train_once(
                 build_fn=lambda learning_rate: build_mlp(hidden_units=64, learning_rate=learning_rate),
                 X=X,
                 y=y,
                 lr=lr,
-                max_epochs=300,
+                max_epochs=int(args.max_epochs_mlp),
                 dmax=dmax,
                 run_id=run,
                 model_name="mlp",

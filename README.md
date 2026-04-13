@@ -55,6 +55,12 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 
 **Resumen:** Se midió la robustez de Perceptrón y MLP ante perturbaciones en la entrada, generando un resumen cuantitativo y visual de degradación por nivel de ruido.
 
+### **Bloque 7 — Automatización (pipeline reproducible)**
+- Script “orquestador” para ejecutar entrenamiento → evaluación → comparación → hiperparámetros → tablas/figuras → ruido
+- Parámetros configurables para el barrido de hiperparámetros (CLI)
+
+**Resumen:** Se creó un pipeline reproducible para generar todos los resultados del TFG con un único comando.
+
 ---
 
 ## ✅ Estructura del proyecto
@@ -219,6 +225,21 @@ Evalúa los modelos guardados sobre `lettersval.pat` inyectando ruido (inversió
 
 ```bash
 python -m src.eval.evaluate_noise
+```
+
+---
+
+### **Bloque 7 — Pipeline reproducible**
+Ejecuta el flujo completo (entrenar, evaluar, comparar, hiperparámetros, tablas/gráficas y ruido):
+
+```bash
+python -m src.train.run_pipeline
+```
+
+Opcional (modo rápido para probar):
+
+```bash
+python -m src.train.run_pipeline --quick
 ```
 
 ---
