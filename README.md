@@ -61,6 +61,13 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 
 **Resumen:** Se creó un pipeline reproducible para generar todos los resultados del TFG con un único comando.
 
+### **Bloque 8 — Consolidación de resultados**
+- Elección del modelo final y parámetros recomendados (con criterio de validación/estabilidad/ruido)
+- Preparación de tablas y figuras finales (listas para incluir en la memoria)
+- Organización de métricas en formatos CSV/Markdown/LaTeX
+
+**Resumen:** Se consolidaron los resultados de todos los experimentos y se dejaron listos para documentar en la memoria.
+
 ---
 
 ## ✅ Estructura del proyecto
@@ -242,6 +249,10 @@ Opcional (modo rápido para probar):
 python -m src.train.run_pipeline --quick
 ```
 
+Notas:
+- El pipeline regenera los ficheros en `results/metrics`, `results/figures` y `results/logs`.
+- Además de la tabla comparativa de modelos, se exportan tablas para hiperparámetros y ruido en `.csv`, `.md` y `.tex`.
+
 ---
 
 ## ✅ Resultados obtenidos (validación)
@@ -249,7 +260,7 @@ python -m src.train.run_pipeline --quick
 | Modelo | Accuracy |
 |--------|----------|
 | Perceptrón | **0.8889** |
-| MLP (1 capa oculta, 128) | **1.0000** |
+| MLP (1 capa oculta, 64) | **1.0000** |
 
 ---
 

@@ -26,7 +26,19 @@ def set_seed(seed: int):
     tf.random.set_seed(seed)
 
 
-def train_once(build_fn, X, y, lr, max_epochs, dmax, run_id, model_name, out_dir):
+def train_once(
+    build_fn,
+    X,
+    y,
+    X_val,
+    y_val,
+    lr,
+    max_epochs,
+    dmax,
+    run_id,
+    model_name,
+    out_dir,
+):
     model = build_fn(learning_rate=lr)
 
     callbacks = [
@@ -54,6 +66,16 @@ def train_once(build_fn, X, y, lr, max_epochs, dmax, run_id, model_name, out_dir
     min_loss = float(hist_df["loss"].min())
     max_acc = float(hist_df["accuracy"].max()) if "accuracy" in hist_df else np.nan
 
+    val_loss = np.nan
+    val_acc = np.nan
+    if X_val is not None and y_val is not None:
+        eval_out = model.evaluate(X_val, y_val, verbose=0)
+        if isinstance(eval_out, (list, tuple)) and len(eval_out) >= 2:
+            val_loss = float(eval_out[0])
+            val_acc = float(eval_out[1])
+        else:
+            val_loss = float(eval_out)
+
     return {
         "model": model_name,
         "learning_rate": lr,
@@ -63,6 +85,8 @@ def train_once(build_fn, X, y, lr, max_epochs, dmax, run_id, model_name, out_dir
         "final_accuracy": final_acc,
         "min_loss": min_loss,
         "max_accuracy": max_acc,
+        "val_loss": val_loss,
+        "val_accuracy": val_acc,
         "history_path": hist_path
     }
 
@@ -114,12 +138,19 @@ def parse_args() -> argparse.Namespace:
         default=2000,
         help="Semilla base para el MLP (se suma el nº de repetición).",
     )
+    p.add_argument(
+        "--val-path",
+        type=str,
+        default="data/raw/lettersval.pat",
+        help="Ruta del fichero de validación .pat para calcular val_accuracy.",
+    )
     return p.parse_args()
 
 
 def main():
     args = parse_args()
     X, y = load_pat("data/raw/letterstrain.pat")
+    X_val, y_val = load_pat(str(args.val_path))
 
     learning_rates = [float(lr) for lr in args.learning_rates]
     repeats = int(args.repeats)
@@ -137,6 +168,8 @@ def main():
                 build_fn=build_perceptron,
                 X=X,
                 y=y,
+                X_val=X_val,
+                y_val=y_val,
                 lr=lr,
                 max_epochs=int(args.max_epochs_perceptron),
                 dmax=dmax,
@@ -154,6 +187,8 @@ def main():
                 build_fn=lambda learning_rate: build_mlp(hidden_units=64, learning_rate=learning_rate),
                 X=X,
                 y=y,
+                X_val=X_val,
+                y_val=y_val,
                 lr=lr,
                 max_epochs=int(args.max_epochs_mlp),
                 dmax=dmax,
@@ -172,6 +207,10 @@ def main():
         std_final_loss=("final_loss", "std"),
         mean_final_acc=("final_accuracy", "mean"),
         std_final_acc=("final_accuracy", "std"),
+        mean_val_loss=("val_loss", "mean"),
+        std_val_loss=("val_loss", "std"),
+        mean_val_acc=("val_accuracy", "mean"),
+        std_val_acc=("val_accuracy", "std"),
         mean_epochs=("epochs_run", "mean")
     ).reset_index()
 

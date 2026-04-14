@@ -4,7 +4,7 @@
     "accuracy_val":0.8888888889
   },
   {
-    "modelo":"MLP (1 capa oculta, 128)",
+    "modelo":"MLP (1 capa oculta, 64)",
     "accuracy_val":1.0
   }
 ]

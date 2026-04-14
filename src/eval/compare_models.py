@@ -18,7 +18,7 @@ def main():
 
     comparison = pd.DataFrame([
         {"modelo": "Perceptrón", "accuracy_val": acc_perceptron},
-        {"modelo": "MLP (1 capa oculta, 128)", "accuracy_val": acc_mlp},
+        {"modelo": "MLP (1 capa oculta, 64)", "accuracy_val": acc_mlp},
     ])
 
     os.makedirs("results/metrics", exist_ok=True)

@@ -92,12 +92,12 @@ def main() -> None:
         run_module("src.train.run_hyperparams", hyper_args)
         run_module("src.viz.plot_hyperparams")
 
-    # 4) Tablas/gráficas para la memoria
-    run_module("src.viz.generate_tables_and_figures")
-
-    # 5) Ruido (robustez)
+    # 4) Ruido (robustez)
     if not args.skip_noise:
         run_module("src.eval.evaluate_noise", ["--repeats", str(noise_repeats)])
+
+    # 5) Tablas/gráficas para la memoria
+    run_module("src.viz.generate_tables_and_figures")
 
     print("\n✅ Pipeline terminado. Revisa results/metrics y results/figures.")
 
