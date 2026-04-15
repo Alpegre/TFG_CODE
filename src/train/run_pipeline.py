@@ -1,3 +1,15 @@
+"""Bloque 7/8 — Ejecución del pipeline completo
+
+Orquesta la ejecución reproducible del proyecto llamando a los módulos con
+`python -m ...` (entrenamiento, evaluación, comparación, barrido de
+hiperparámetros, robustez ante ruido y generación de tablas/figuras).
+
+Ejecución:
+- `python -m src.train.run_pipeline [--quick] [--skip-hyperparams] [--skip-noise]`
+
+Nota: se espera ejecutar desde la raíz del proyecto (donde existe `data/raw/`).
+"""
+
 import argparse
 import os
 import subprocess
@@ -5,6 +17,7 @@ import sys
 
 
 def run_module(module: str, args: list[str] | None = None) -> None:
+    """Ejecuta un módulo con `python -m` y detiene el pipeline si falla."""
     cmd = [sys.executable, "-m", module]
     if args:
         cmd.extend(args)
@@ -14,6 +27,7 @@ def run_module(module: str, args: list[str] | None = None) -> None:
 
 
 def ensure_project_root() -> None:
+    """Comprueba que existen los ficheros `.pat` requeridos en `data/raw/`."""
     required_paths = [
         os.path.join("data", "raw", "letterstrain.pat"),
         os.path.join("data", "raw", "lettersval.pat"),
@@ -28,6 +42,7 @@ def ensure_project_root() -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """Parsea los argumentos de línea de comandos del pipeline."""
     p = argparse.ArgumentParser(
         description=(
             "Bloque 7 — Pipeline reproducible: entrenamiento, evaluación, comparación, "

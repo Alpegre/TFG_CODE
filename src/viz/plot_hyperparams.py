@@ -1,9 +1,24 @@
+"""Bloque 5 — Visualización del barrido de hiperparámetros
+
+Genera gráficas a partir de `results/metrics/hyperparam_summary.csv` para
+analizar el efecto del *learning rate* y la estabilidad entre repeticiones.
+
+Salidas (en `results/figures/`):
+- `hyperparam_loss_vs_lr.png`
+- `hyperparam_acc_vs_lr.png`
+- `hyperparam_stability_loss.png`
+
+Ejecución:
+- `python -m src.viz.plot_hyperparams`
+"""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
 METRICS_DIR = "results/metrics"
 FIGURES_DIR = "results/figures"
+
 
 def main():
     os.makedirs(FIGURES_DIR, exist_ok=True)

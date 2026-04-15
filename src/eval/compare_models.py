@@ -1,9 +1,27 @@
+"""Bloque 4 — Comparación de modelos
+
+Lee las métricas de evaluación en validación (JSON) del perceptrón y del MLP y
+genera una tabla comparativa.
+
+Entradas:
+- `results/metrics/perceptron_eval.json`
+- `results/metrics/mlp_eval.json`
+
+Salidas:
+- `results/metrics/model_comparison.csv`
+- `results/metrics/model_comparison.json`
+
+Ejecución:
+- `python -m src.eval.compare_models`
+"""
+
 import json
 import os
 import pandas as pd
 
 
 def load_accuracy(path):
+    """Carga la accuracy desde un JSON con formato `{"accuracy": ...}`."""
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data["accuracy"]

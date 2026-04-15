@@ -1,3 +1,22 @@
+"""Bloque 6 — Evaluación de robustez frente a ruido
+
+Evalúa el impacto de introducir ruido en las entradas (inversión de píxeles) en
+el conjunto de validación. Para cada nivel de ruido se realizan varias
+repeticiones y se reporta media y desviación típica de la accuracy.
+
+Salidas (en `results/metrics/`):
+- `noise_eval_runs.csv`: accuracy por repetición.
+- `noise_eval_summary.csv` / `noise_eval_summary.json`: media ± std por ruido.
+- `noise_eval_per_sample.csv`: tasa de error por patrón.
+
+Salidas (en `results/figures/`):
+- `noise_accuracy_vs_pixels.png`
+- matrices de confusión por modelo y ruido.
+
+Ejecución:
+- `python -m src.eval.evaluate_noise [--noise 2 4 6] [--repeats 100]`
+"""
+
 import argparse
 import json
 import os

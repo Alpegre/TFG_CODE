@@ -1,3 +1,19 @@
+"""Bloque 4 — Entrenamiento del MLP
+
+Script de entrenamiento de un MLP sencillo (35 → hidden → 26) con softmax.
+
+- Carga `data/raw/letterstrain.pat`.
+- Entrena el modelo.
+- Guarda el modelo y el histórico para su análisis posterior.
+
+Salidas:
+- `results/logs/mlp_model.keras`
+- `results/metrics/mlp_history.csv`
+
+Ejecución:
+- `python -m src.train.train_mlp`
+"""
+
 import os
 import pandas as pd
 

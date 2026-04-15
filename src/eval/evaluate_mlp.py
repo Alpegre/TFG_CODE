@@ -1,3 +1,16 @@
+"""Bloque 4 — Evaluación del MLP en validación
+
+Carga el modelo entrenado (`results/logs/mlp_model.keras`) y evalúa su
+rendimiento sobre `data/raw/lettersval.pat`.
+
+Salidas:
+- `results/metrics/mlp_eval.json` (accuracy)
+- `results/figures/mlp_confusion.png` (matriz de confusión)
+
+Ejecución:
+- `python -m src.eval.evaluate_mlp`
+"""
+
 import os
 import json
 import numpy as np

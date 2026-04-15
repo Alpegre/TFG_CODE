@@ -1,3 +1,16 @@
+"""Bloque 2 — Carga de ficheros .pat (SNNS)
+
+Lee ficheros `.pat` (formato SNNS V3.2) y devuelve:
+- X: array (n_patrones, 35) con la entrada 7×5 aplanada.
+- y: array (n_patrones, 26) one-hot.
+
+Entradas típicas:
+- data/raw/letterstrain.pat
+- data/raw/lettersval.pat
+
+Usado por scripts de entrenamiento, evaluación y visualización.
+"""
+
 import re
 import numpy as np
 

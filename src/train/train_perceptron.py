@@ -1,3 +1,19 @@
+"""Bloque 3 — Entrenamiento del perceptrón
+
+Script de entrenamiento del perceptrón (35 → 26) con softmax.
+
+- Carga `data/raw/letterstrain.pat`.
+- Entrena el modelo.
+- Guarda el modelo y el histórico para su análisis posterior.
+
+Salidas:
+- `results/logs/perceptron_model.keras`
+- `results/metrics/perceptron_history.csv`
+
+Ejecución:
+- `python -m src.train.train_perceptron`
+"""
+
 import os
 import pandas as pd
 

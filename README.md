@@ -9,27 +9,29 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 ## ✅ Bloques completados hasta ahora
 
 ### **Bloque 1 — Preparación del proyecto**
-- Estructura base del proyecto
+- Estructura base del proyecto (datos, código, resultados)
 - Ficheros `.pat` en `data/raw/`
-- Dependencias en `requirements.txt`
+- Entorno y dependencias en [requirements.txt](requirements.txt)
 
-**Resumen:** Se organizó el repositorio y el entorno (dependencias) para poder entrenar, evaluar y guardar resultados de forma reproducible.
+**Resumen:** Se organizó el repositorio y el entorno para poder ejecutar el flujo completo (entrenamiento → evaluación → tablas/figuras) de forma reproducible.
 
 ### **Bloque 2 — Lectura y visualización**
-- Lector de ficheros `.pat`
-- Conversión a tensores/arrays
+- Lector de ficheros `.pat` (formato SNNS)
+- Conversión a arrays/tensores (`X` con 35 entradas, `y` one-hot con 26 clases)
 - Visualización 7×5
 - Mapeo automático A–Z
+- Scripts clave: [src/data/pat_loader.py](src/data/pat_loader.py), [src/data/labels.py](src/data/labels.py), [src/viz/plot_letter.py](src/viz/plot_letter.py), [src/viz/visual_test.py](src/viz/visual_test.py)
 
-**Resumen:** Se implementó el parser de `.pat` (formato SNNS) y utilidades para comprobar visualmente que los patrones se cargan correctamente.
+**Resumen:** Se implementó el parser de `.pat` y utilidades para validar visualmente que los patrones se cargan correctamente antes de entrenar.
 
 ### **Bloque 3 — Perceptrón simple**
 - Modelo 35 → 26 (sin capa oculta)
 - Entrenamiento completo
 - Evaluación en validación
 - Guardado de modelo y métricas
+- Scripts clave: [src/models/perceptron.py](src/models/perceptron.py), [src/train/train_perceptron.py](src/train/train_perceptron.py), [src/viz/plot_history.py](src/viz/plot_history.py), [src/eval/evaluate_perceptron.py](src/eval/evaluate_perceptron.py)
 
-**Resumen:** Se entrenó el modelo base (sin capa oculta), se guardaron históricos/métricas y se evaluó en validación con accuracy y matriz de confusión.
+**Resumen:** Se entrenó el modelo base, se guardaron los históricos y se evaluó en `lettersval.pat` generando accuracy y matriz de confusión.
 
 ### **Bloque 4 — MLP con capa oculta**
 - Modelo con 1 capa oculta (ReLU)
@@ -37,34 +39,39 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - Entrenamiento completo
 - Evaluación y métricas en validación
 - Comparación Perceptrón vs MLP
+- Scripts clave: [src/models/mlp.py](src/models/mlp.py), [src/train/train_mlp.py](src/train/train_mlp.py), [src/viz/plot_history_mlp.py](src/viz/plot_history_mlp.py), [src/eval/evaluate_mlp.py](src/eval/evaluate_mlp.py), [src/eval/compare_models.py](src/eval/compare_models.py)
 
-**Resumen:** Se añadió un modelo más expresivo (MLP), se repitió el flujo de entrenamiento/evaluación y se generó una comparación directa con el perceptrón.
+**Resumen:** Se añadió un modelo más expresivo (MLP) y se replicó el mismo flujo de entrenamiento/evaluación, generando una comparación directa en validación.
 
 ### **Bloque 5 — Experimentos de hiperparámetros (learning rate)**
 - Barrido de *learning rate* en Perceptrón y MLP
 - Varias repeticiones por configuración (estabilidad)
 - Parada temprana por umbral de loss ($d_{max}$)
-- Exportación de resultados y resumen estadístico
+- Exportación de resultados y resumen estadístico (incluye métricas de validación)
+- Scripts clave: [src/train/run_hyperparams.py](src/train/run_hyperparams.py), [src/viz/plot_hyperparams.py](src/viz/plot_hyperparams.py)
 
-**Resumen:** Se automatizó el barrido de learning rate con repeticiones y criterio de parada, exportando resultados (CSV) y generando gráficas/tablas para la memoria.
+**Resumen:** Se automatizó el barrido de learning rate con repeticiones y criterio de parada, guardando resultados en CSV y generando gráficas para apoyar la elección final del Bloque 8.
 
 ### **Bloque 6 — Validación con ruido**
 - Evaluación en `lettersval.pat` con inversión (0↔1) de 2/4/6 píxeles por patrón
 - Repeticiones por nivel de ruido para estimar media y desviación típica
-- Exportación de métricas (CSV/JSON) y figuras (curva + matrices de confusión)
+- Exportación de métricas (CSV/JSON) y figuras (curva + matrices de confusión por nivel)
+- Script clave: [src/eval/evaluate_noise.py](src/eval/evaluate_noise.py)
 
-**Resumen:** Se midió la robustez de Perceptrón y MLP ante perturbaciones en la entrada, generando un resumen cuantitativo y visual de degradación por nivel de ruido.
+**Resumen:** Se cuantificó la degradación de accuracy ante ruido y se identificaron patrones/confusiones más difíciles para comparar robustez entre modelos.
 
 ### **Bloque 7 — Automatización (pipeline reproducible)**
 - Script “orquestador” para ejecutar entrenamiento → evaluación → comparación → hiperparámetros → ruido → tablas/figuras
 - Parámetros configurables para el barrido de hiperparámetros (CLI)
+- Script clave: [src/train/run_pipeline.py](src/train/run_pipeline.py)
 
-**Resumen:** Se creó un pipeline reproducible para generar todos los resultados del TFG con un único comando.
+**Resumen:** Se creó un pipeline reproducible para ejecutar el experimento de principio a fin y regenerar automáticamente modelos, métricas, tablas y figuras.
 
 ### **Bloque 8 — Consolidación de resultados**
 - Elección del modelo final y parámetros recomendados (con criterio de validación/estabilidad/ruido)
 - Preparación de tablas y figuras finales (listas para incluir en la memoria)
 - Organización de métricas en formatos CSV/Markdown/LaTeX
+- Scripts clave: [src/viz/generate_tables_and_figures.py](src/viz/generate_tables_and_figures.py) (exporta tablas `.md`/`.tex`), [src/train/run_pipeline.py](src/train/run_pipeline.py)
 
 **Objetivo:** dejar un conjunto **final** de resultados (métricas, tablas y figuras) coherente y listo para incorporar en la memoria.
 
@@ -74,6 +81,13 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - **Robustez** ante ruido (2/4/6 píxeles), comparando degradación y casos difíciles.
 
 **Resultado esperado:** tablas y figuras finales exportadas en `results/metrics` y `results/figures` para documentar el TFG.
+
+### **Bloque 9 — Documentación y limpieza**
+- Expansión de la explicación de cada bloque en este README.
+- Cabecera de propósito en cada script (docstring inicial: `"""Bloque X — ..."""`).
+- Ajustes menores para que scripts de prueba se ejecuten de forma segura como módulo (`main()` + `if __name__ == "__main__"`).
+
+**Resumen:** se dejó el repositorio más “presentable” para la memoria/defensa: más contexto en README y scripts autoexplicativos.
 
 ---
 

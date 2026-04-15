@@ -1,3 +1,16 @@
+"""Bloque 4 — Gráficas del entrenamiento (MLP)
+
+Genera las curvas de entrenamiento (loss y accuracy) a partir de
+`results/metrics/mlp_history.csv`.
+
+Salidas:
+- `results/figures/mlp_loss.png`
+- `results/figures/mlp_accuracy.png`
+
+Ejecución:
+- `python -m src.viz.plot_history_mlp`
+"""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt

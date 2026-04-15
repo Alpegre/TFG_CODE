@@ -1,3 +1,16 @@
+"""Bloque 3 — Gráficas del entrenamiento (Perceptrón)
+
+Genera las curvas de entrenamiento (loss y accuracy) a partir de
+`results/metrics/perceptron_history.csv`.
+
+Salidas:
+- `results/figures/perceptron_loss.png`
+- `results/figures/perceptron_accuracy.png`
+
+Ejecución:
+- `python -m src.viz.plot_history`
+"""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt

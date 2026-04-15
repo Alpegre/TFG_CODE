@@ -1,3 +1,22 @@
+"""Bloque 5 — Barrido de hiperparámetros (learning rate)
+
+Ejecuta un barrido de *learning rates* para:
+- Perceptrón (Bloque 3)
+- MLP (Bloque 4)
+
+Para cada learning rate se realizan varias repeticiones (semillas distintas) y
+se aplica parada temprana cuando `loss <= dmax`. Además se calcula el rendimiento
+en validación (`lettersval.pat`) para poder comparar generalización.
+
+Salidas (en `results/metrics/`):
+- `hyperparam_results.csv`: resultados por ejecución.
+- `hyperparam_summary.csv`: medias y desviaciones por (modelo, lr).
+- `*_history.csv`: histórico por ejecución.
+
+Ejecución:
+- `python -m src.train.run_hyperparams`
+"""
+
 import os
 import argparse
 import random
@@ -11,6 +30,8 @@ from src.models.mlp import build_mlp
 
 
 class LossThreshold(tf.keras.callbacks.Callback):
+    """Detiene el entrenamiento cuando la loss cae por debajo de un umbral."""
+
     def __init__(self, threshold):
         super().__init__()
         self.threshold = threshold
@@ -21,6 +42,7 @@ class LossThreshold(tf.keras.callbacks.Callback):
 
 
 def set_seed(seed: int):
+    """Fija semillas de `random`, `numpy` y `tensorflow` para reproducibilidad."""
     random.seed(seed)
     np.random.seed(seed)
     tf.random.set_seed(seed)
@@ -39,6 +61,7 @@ def train_once(
     model_name,
     out_dir,
 ):
+    """Entrena una ejecución, guarda el histórico y devuelve métricas clave."""
     model = build_fn(learning_rate=lr)
 
     callbacks = [
@@ -92,6 +115,7 @@ def train_once(
 
 
 def parse_args() -> argparse.Namespace:
+    """Parsea parámetros del barrido (LRs, repeticiones, dmax, semillas, etc.)."""
     p = argparse.ArgumentParser(
         description="Bloque 5 — Barrido de hiperparámetros (learning rate) con repeticiones y dmax.",
     )

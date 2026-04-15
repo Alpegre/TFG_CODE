@@ -1,3 +1,16 @@
+"""Bloque 3 — Evaluación del perceptrón en validación
+
+Carga el modelo entrenado (`results/logs/perceptron_model.keras`) y evalúa su
+rendimiento sobre `data/raw/lettersval.pat`.
+
+Salidas:
+- `results/metrics/perceptron_eval.json` (accuracy)
+- `results/figures/perceptron_confusion.png` (matriz de confusión)
+
+Ejecución:
+- `python -m src.eval.evaluate_perceptron`
+"""
+
 import os
 import json
 import numpy as np

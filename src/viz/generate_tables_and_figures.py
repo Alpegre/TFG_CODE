@@ -1,9 +1,21 @@
+"""Bloque 8 — Generación de tablas y figuras para la memoria
+
+Consolida resultados (históricos de entrenamiento, comparación de modelos,
+hiperparámetros y ruido) y genera:
+- Figuras combinadas en `results/figures/`.
+- Tablas en CSV/LaTeX/Markdown en `results/metrics/`.
+
+Ejecución:
+- `python -m src.viz.generate_tables_and_figures`
+"""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
 METRICS_DIR = "results/metrics"
 FIGURES_DIR = "results/figures"
+
 
 def ensure_dirs():
     os.makedirs(METRICS_DIR, exist_ok=True)
