@@ -56,7 +56,7 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 **Resumen:** Se midió la robustez de Perceptrón y MLP ante perturbaciones en la entrada, generando un resumen cuantitativo y visual de degradación por nivel de ruido.
 
 ### **Bloque 7 — Automatización (pipeline reproducible)**
-- Script “orquestador” para ejecutar entrenamiento → evaluación → comparación → hiperparámetros → tablas/figuras → ruido
+- Script “orquestador” para ejecutar entrenamiento → evaluación → comparación → hiperparámetros → ruido → tablas/figuras
 - Parámetros configurables para el barrido de hiperparámetros (CLI)
 
 **Resumen:** Se creó un pipeline reproducible para generar todos los resultados del TFG con un único comando.
@@ -66,7 +66,14 @@ El trabajo reproduce y amplía el flujo de trabajo tradicional de JavaNNS, migr�
 - Preparación de tablas y figuras finales (listas para incluir en la memoria)
 - Organización de métricas en formatos CSV/Markdown/LaTeX
 
-**Resumen:** Se consolidaron los resultados de todos los experimentos y se dejaron listos para documentar en la memoria.
+**Objetivo:** dejar un conjunto **final** de resultados (métricas, tablas y figuras) coherente y listo para incorporar en la memoria.
+
+**Qué se hace (criterio de consolidación):**
+- **Validación limpia** (`lettersval.pat`) para seleccionar el modelo con mejor rendimiento general.
+- **Estabilidad** del entrenamiento en el barrido de hiperparámetros (media/desviación típica).
+- **Robustez** ante ruido (2/4/6 píxeles), comparando degradación y casos difíciles.
+
+**Resultado esperado:** tablas y figuras finales exportadas en `results/metrics` y `results/figures` para documentar el TFG.
 
 ---
 
@@ -204,10 +211,11 @@ Ejecuta múltiples entrenamientos para **Perceptrón** y **MLP** variando el *le
 python -m src.train.run_hyperparams
 ```
 
-Parámetros actuales (definidos en el script):
-- `learning_rates = [0.2, 2.0, 5.0, 10.0]`
-- `repeats = 5` (repeticiones por valor)
-- `dmax = 0.1` (parada temprana cuando `loss <= dmax`)
+Parámetros por defecto:
+- `--learning-rates 0.2 2.0 5.0 10.0`
+- `--repeats 5` (repeticiones por valor)
+- `--dmax 0.1` (parada temprana cuando `loss <= dmax`)
+- `--val-path data/raw/lettersval.pat` (se calcula también `val_loss` y `val_accuracy` para consolidar en Bloque 8)
 
 ### **Bloque 5 — Gráficas de hiperparámetros**
 Genera gráficas a partir de `results/metrics/hyperparam_summary.csv` (requiere ejecutar el barrido antes).
@@ -255,6 +263,22 @@ Notas:
 
 ---
 
+### **Bloque 8 — Consolidación de resultados (final)**
+Este bloque consiste en ejecutar el pipeline **sin modo rápido** para dejar un conjunto final de resultados y tablas listo para la memoria.
+
+Comando recomendado (repeticiones suficientes para el ruido):
+
+```bash
+python -m src.train.run_pipeline --noise-repeats 100
+```
+
+Salida final esperada (lista para incluir en la memoria):
+- Comparación en validación: `results/metrics/table_model_comparison.*`
+- Resumen de hiperparámetros (incluye validación): `results/metrics/table_hyperparam_summary.*`
+- Resumen de robustez con ruido: `results/metrics/table_noise_eval_summary.*`
+
+---
+
 ## ✅ Resultados obtenidos (validación)
 
 | Modelo | Accuracy |
@@ -288,7 +312,7 @@ Notas:
 
 ### Hiperparámetros (learning rate)
 - `results/metrics/hyperparam_results.csv` (todas las ejecuciones)
-- `results/metrics/hyperparam_summary.csv` (media/desviación por modelo y LR)
+- `results/metrics/hyperparam_summary.csv` (media/desviación por modelo y LR, incluye métricas en validación)
 - `results/metrics/perceptron_lr{LR}_run{N}_history.csv` (histórico por ejecución)
 - `results/metrics/mlp_lr{LR}_run{N}_history.csv` (histórico por ejecución)
 - `results/figures/hyperparam_loss_vs_lr.png`
@@ -302,6 +326,12 @@ Notas:
 - `results/metrics/table_model_comparison.csv`
 - `results/metrics/table_model_comparison.md`
 - `results/metrics/table_model_comparison.tex`
+- `results/metrics/table_hyperparam_summary.csv`
+- `results/metrics/table_hyperparam_summary.md`
+- `results/metrics/table_hyperparam_summary.tex`
+- `results/metrics/table_noise_eval_summary.csv`
+- `results/metrics/table_noise_eval_summary.md`
+- `results/metrics/table_noise_eval_summary.tex`
 
 ### Validación con ruido
 - `results/metrics/noise_eval_runs.csv` (accuracy por repetición)
